@@ -30,13 +30,21 @@ function windowToCanvas(x, y) {
     y: y - canvasRectangle.top };
 }
 
-document.onkeypress = function(e) {
-  if (e.keyCode === 97) {
-    players[0].y -= 5;
-  } else if (e.keyCode === 113) {
-    players[0].y += 5;
-  }
-  e.preventDefault(e);
+canvas.onmousemove = function(e) {
+  var loc = windowToCanvas(canvas, e.clientX, e.clientY);
+
+// TODO: update paddle position
+  if (loc.y < 0) loc.y = 0;
+  if (loc.y > canvas.height - players[0].height) loc.y = canvas.height - players[0].height;
+
+  players[0]. y = loc.y;
+};
+
+function windowToCanvas(canvas, x, y) {
+  var bbox = canvas.getBoundingClientRect();
+  return { x: x - bbox.left * (canvas.width / bbox.width),
+    y: y - bbox.top * (canvas.height / bbox.height)
+  };
 }
 
 function drawBackground() {
@@ -75,7 +83,7 @@ function update() {
 }
 
 function animate(time) {
-  context.clearRect(0,0,canvas.width,canvas.height);
+  context.clearRect(0, 0, canvas.width, canvas.height);
   drawBackground();
   update();
   draw();
