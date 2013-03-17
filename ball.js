@@ -14,5 +14,23 @@ var
 
                context.restore();
              }
+    },
+    moveBall = {
+      executed: false,
+      execute: function(ball, context, time) {
+                 if (!this.executed) { console.log(ball); this.executed = true;}
+                 if (ball.left + ball.velocityX + ball.width > context.canvas.width ||
+                     ball.left + ball.velocityX < 0) {
+                   ball.velocityX = -ball.velocityX;
+                 }
+
+                 if (ball.top + ball.velocityY + ball.height > context.canvas.height ||
+                     ball.top + ball.velocityY < 0) {
+                   ball.velocityY = -ball.velocityY;
+                 }
+
+                 ball.left += ball.velocityX;
+                 ball.top += ball.velocityY;
+               }
     };
 

@@ -1,15 +1,7 @@
 var canvas = document.getElementById('canvas'),
     context = canvas.getContext('2d'),
-    sprites = [ new Sprite('ball', ballPainter) ],
-    ball = {
-      x: 150,
-      y: 250,
-      velocityX: -3.2,
-      velocityY: 3.5,
-      radius: 5,
-      color: 'rgba(255,255,0,1)',
-      fillStyle: 'pink'
-    },
+    ball = new Sprite('ball', ballPainter, [ moveBall ]),
+    sprites = [ ball ],
     players = [{
       x: 10,
       y: 250,
@@ -68,19 +60,12 @@ function draw() {
   }
 }
 
-function update() {
-  if (ball.x + ball.velocityX + ball.radius > context.canvas.width ||
-      ball.x + ball.velocityX - ball.radius < 0) {
-    ball.velocityX = -ball.velocityX;
-  }
+function update(time) {
+  var i;
 
-  if (ball.y + ball.velocityY + ball.radius > context.canvas.height ||
-      ball.y + ball.velocityY - ball.radius < 0) {
-    ball.velocityY = -ball.velocityY;
+  for (i = 0; i < sprites.length; i++) {
+    sprites[i].update(context, time);
   }
-
-  ball.x += ball.velocityX;
-  ball.y += ball.velocityY;
 }
 
 function animate(time) {
@@ -88,12 +73,18 @@ function animate(time) {
 
   drawBackground();
 
-  update();
+  update(time);
 
   draw();
 
   window.requestAnimationFrame(animate);
 }
+
+// Initialization
+ball.left = 250;
+ball.top = 250,
+ball.velocityX = -3.2;
+ball.velocityY =  3.5;
 
 window.requestAnimationFrame(animate);
 
