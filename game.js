@@ -1,6 +1,6 @@
 var canvas = document.getElementById('canvas'),
     context = canvas.getContext('2d'),
-    ball2 = new Sprite('ball', ballPainter),
+    sprites = [ new Sprite('ball', ballPainter) ],
     ball = {
       x: 150,
       y: 250,
@@ -34,7 +34,7 @@ function windowToCanvas(x, y) {
 canvas.onmousemove = function(e) {
   var loc = windowToCanvas(canvas, e.clientX, e.clientY);
 
-// TODO: update paddle position
+  // TODO: update paddle position
   if (loc.y < 0) loc.y = 0;
   if (loc.y > canvas.height - players[0].height) loc.y = canvas.height - players[0].height;
 
@@ -54,9 +54,12 @@ function drawBackground() {
 }
 
 function draw() {
-  var player = null;
+  var player = null,
+      i;
 
-  ball2.paint(context);
+  for (i = 0; i < sprites.length; i++) {
+    sprites[i].paint(context);
+  }
 
   for (var i = 0; i < players.length; i++) {
     player = players[i];
@@ -82,12 +85,15 @@ function update() {
 
 function animate(time) {
   context.clearRect(0, 0, canvas.width, canvas.height);
+
   drawBackground();
+
   update();
+
   draw();
-  // Update and draw animation objects
-  window.requestAnimationFrame(animate); // Sustain the animation
+
+  window.requestAnimationFrame(animate);
 }
 
-window.requestAnimationFrame(animate); // Start the animation
+window.requestAnimationFrame(animate);
 
