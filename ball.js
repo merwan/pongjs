@@ -16,9 +16,7 @@ var
              }
     },
     moveBall = {
-      executed: false,
       execute: function(ball, context, time) {
-                 if (!this.executed) { console.log(ball); this.executed = true;}
                  if (ball.left + ball.velocityX + ball.width > context.canvas.width ||
                      ball.left + ball.velocityX < 0) {
                    ball.velocityX = -ball.velocityX;
