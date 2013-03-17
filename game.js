@@ -1,5 +1,6 @@
 var canvas = document.getElementById('canvas'),
     context = canvas.getContext('2d'),
+    ball2 = new Sprite('ball', ballPainter),
     ball = {
       x: 150,
       y: 250,
@@ -55,10 +56,7 @@ function drawBackground() {
 function draw() {
   var player = null;
 
-  context.beginPath();
-  context.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2, false);
-  context.fillStyle = ball.fillStyle;
-  context.fill();
+  ball2.paint(context);
 
   for (var i = 0; i < players.length; i++) {
     player = players[i];
