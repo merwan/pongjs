@@ -1,7 +1,8 @@
 var canvas = document.getElementById('canvas'),
     context = canvas.getContext('2d'),
     ball = new Sprite('ball', ballPainter, [ moveBall ]),
-    sprites = [ ball ],
+    paddle = new Sprite('paddle', paddlePainter, [ movePaddle ]),
+    sprites = [ ball, paddle ],
     players = [{
       x: 10,
       y: 250,
@@ -85,6 +86,11 @@ ball.left = 250;
 ball.top = 250,
 ball.velocityX = -3.2;
 ball.velocityY =  3.5;
+
+paddle.left = 10;
+paddle.top = 250;
+paddle.width = 5,
+paddle.height = 50,
 
 window.requestAnimationFrame(animate);
 
